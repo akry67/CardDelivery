@@ -47,7 +47,7 @@ public class CardDeliveryTest {
     void shouldSubmitRequest() {
         Configuration.holdBrowserOpen = true;
         Configuration.browserSize = "1600x900";
-        open("http://localhost:9999/");
+        open("http://localhost:9999");
         $x("//input[@placeholder=\"Город\"]").setValue("Самара");
         $x("//input[@placeholder=\"Дата встречи\"]").val("02.03.2022");
         $(By.name("name")).val("Кузнецова-Макалова Анна");

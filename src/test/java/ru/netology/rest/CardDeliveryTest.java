@@ -56,7 +56,7 @@ public class CardDeliveryTest {
         $(byText("Забронировать")).click();
         $(withText("Успешно!")).shouldBe(Condition.appear, Duration.ofSeconds(15));
 
-        
+
     }
 
 }

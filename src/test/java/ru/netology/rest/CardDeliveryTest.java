@@ -23,25 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeliveryTest {
     WebDriver driver;
-
-
-    @BeforeAll
-    static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-
-    @BeforeEach
-    void setupTest() {
-        driver = new ChromeDriver();
-    }
-
-    @AfterEach
-    void teardown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+    
 
     @Test
     void shouldSubmitRequest() {

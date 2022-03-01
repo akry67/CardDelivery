@@ -22,23 +22,17 @@ import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeliveryTest {
-    WebDriver driver;
-
 
     @Test
     void shouldSubmitRequest() {
-        Configuration.holdBrowserOpen = true;
-        Configuration.browserSize = "1600x900";
         open("http://localhost:9999");
         $x("//input[@placeholder=\"Город\"]").setValue("Самара");
-        $x("//input[@placeholder=\"Дата встречи\"]").val("02.03.2022");
+        $x("//input[@placeholder=\"Дата встречи\"]").val("04.03.2022");
         $(By.name("name")).val("Кузнецова-Макалова Анна");
         $(By.name("phone")).val("+79270000000");
         $("[data-test-id=\"agreement\"]").click();
         $(byText("Забронировать")).click();
         $(withText("Успешно!")).shouldBe(Condition.appear, Duration.ofSeconds(15));
-
-
     }
 
 }

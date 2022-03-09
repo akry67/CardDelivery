@@ -2,19 +2,14 @@ package ru.netology.rest;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.Keys;
+
 
 import java.time.Duration;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selectors.withText;
@@ -23,16 +18,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CardDeliveryTest {
 
+    String generateDate(int days) {
+
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+
+    }
+
+    String planningDate = generateDate(6);
+
     @Test
     void shouldSubmitRequest() {
+        Configuration.holdBrowserOpen = true;
         open("http://localhost:9999");
         $x("//input[@placeholder=\"Город\"]").setValue("Самара");
-        $x("//input[@placeholder=\"Дата встречи\"]").val("04.03.2022");
+        $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        $x("//input[@placeholder=\"Дата встречи\"]").val(planningDate);
         $(By.name("name")).val("Кузнецова-Макалова Анна");
         $(By.name("phone")).val("+79270000000");
         $("[data-test-id=\"agreement\"]").click();
         $(byText("Забронировать")).click();
-        $(withText("Успешно!")).shouldBe(Condition.appear, Duration.ofSeconds(15));
+        $("[class='notification__content']").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15));
     }
 
 }
